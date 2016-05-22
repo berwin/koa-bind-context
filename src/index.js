@@ -10,9 +10,6 @@
 
 'use strict';
 
-/**
- * Module dependencies.
- */
 var contextMixin = require('./context/index.js');
 var exposeMixin = require('./expose/index.js');
 
