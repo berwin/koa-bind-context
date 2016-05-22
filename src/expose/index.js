@@ -1,5 +1,5 @@
 /**!
- * Koa-bind-context - src/context/index.js
+ * Koa-bind-context - src/exopse/index.js
  *
  * Exposed interface
  *
