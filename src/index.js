@@ -10,8 +10,15 @@
 
 'use strict';
 
-var contextMixin = require('./context/index.js');
-var exposeMixin = require('./expose/index.js');
+/**
+ * Module dependencies.
+ */
+
+var contextMixin = require('./internal/context.js');
+var dependencyMixin = require('./internal/dependency.js');
+var exportsMixin = require('./internal/exports.js');
+
+var apiMixin = require('./api/index.js');
 
 /**
  * Create a new bindContext.
@@ -27,7 +34,12 @@ function BindContext () {
   this._parent = module.parent;
 }
 
+// install internals
+dependencyMixin(BindContext);
 contextMixin(BindContext);
-exposeMixin(BindContext);
+exportsMixin(BindContext);
+
+// install APIs
+apiMixin(BindContext);
 
 module.exports = BindContext;

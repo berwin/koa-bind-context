@@ -1,3 +1,19 @@
+/**!
+ * Koa-bind-context - src/util/index.js
+ *
+ * Authors:
+ *  Berwin <liubowen.niubi@gmail.com>
+ */
+
+'use strict';
+
+/*
+ * Copy src to target
+ * 
+ * @param {Object} target
+ * @param {Object} src
+ * @param {Boolean} Whether to replace default is false
+ */
 exports.mixin = function(dest, src, redefine) {
   var toString = Object.prototype.toString;
 
@@ -12,4 +28,4 @@ exports.mixin = function(dest, src, redefine) {
   }
 
   return dest;
-}
+};

@@ -1,7 +1,7 @@
 /**!
- * Koa-bind-context - src/context/index.js
+ * Koa-bind-context - src/internal/context.js
  *
- * Processing dependency and context
+ * Processing Context
  *
  * Authors:
  *  Berwin <liubowen.niubi@gmail.com>
@@ -9,50 +9,8 @@
 
 'use strict';
 
-/**
- * Module dependencies.
- */
-var util = require('../util/index.js');
-
 module.exports = function (BindContext) {
   var bc = BindContext.prototype;
-
-  /**
-   * Set the modules dependencies so that the modules can access the context
-   */
-
-  bc.config = function (config) {
-    this._getDeps(config);
-  };
-
-  /**
-   * Get the modules dependencies
-   */
-
-  bc._getDeps = function (config) {
-    config = config || {};
-
-    var contexts = config.context;
-    var main = config.main;
-
-    if (contexts) {
-      for (var i in contexts) {
-        this._modules.push({
-          name: i,
-          module: this._parent.require(contexts[i])
-        });
-      }
-    }
-
-    if (main) {
-      for (var j in main) {
-        this._entrance = {
-          name: j,
-          module: this._parent.require(main[j])
-        }
-      }
-    }
-  };
 
   /**
    * Initialize a new context.
@@ -97,4 +55,4 @@ module.exports = function (BindContext) {
       }
     }
   };
-}
+};
