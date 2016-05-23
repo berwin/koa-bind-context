@@ -9,15 +9,13 @@
 
 'use strict';
 
-/*
- * Get the modules dependencies
- */
-
 module.exports = function (BindContext) {
   var bc = BindContext.prototype;
 
   /**
    * Get the modules dependencies
+   *
+   * @api private
    */
 
   bc._getDependencies = function (config) {

@@ -9,6 +9,12 @@
 
 'use strict';
 
+/**
+ * Module dependencies.
+ */
+
+var util = require('../util/index.js');
+
 module.exports = function (BindContext) {
   var bc = BindContext.prototype;
 
@@ -46,12 +52,16 @@ module.exports = function (BindContext) {
 
     function bind(item) {
       var type = toString.call(item.module);
+
       if (type === '[object Object]') {
-        item.module = util.mixin(context, item.module);
+        item.module = util.mixin(item.module, context, true);
       }
 
       if (type === '[object Function]') {
-        item.module = item.module.bind(context);
+        var noBind = item.module.name.indexOf('bound') === -1;
+        if (noBind) {
+          item.module = item.module.bind(context);
+        }
       }
     }
   };

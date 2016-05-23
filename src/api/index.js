@@ -21,22 +21,9 @@ module.exports = function (BindContext) {
   };
 
   /**
-   * Expose `dispatch`.
+   * Expose `exports`.
    */
-  bc.dispatch = function () {
-    var self = this;
-    var toString = Object.prototype.toString;
-    var type = toString.call(this._entrance.module);
-    var expose = null;
-
-    if (type === '[object Object]') {
-      
-    }
-
-    if (type === '[object Function]') {}
-
-    return function *() {
-      this.body = 'hello world~';
-    };
+  bc.exports = function () {
+    return this._exports();
   };
 }
