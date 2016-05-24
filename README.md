@@ -108,7 +108,7 @@ exports.findById = function *(id) {
 };
 ```
 
-proxy/index.js
+proxy/user/index.js
 
 ```javascript
 module.exports = {
