@@ -44,7 +44,8 @@ module.exports = function (BindContext) {
 
     return function *(next) {
       var modules = self._createContext();
-      var ctx = self._bindContext(modules, this);
+      var modulesMixin = self._bindContext(modules, this);
+      var ctx = util.mixin(this, modulesMixin);
 
       if (fn.constructor.name === 'GeneratorFunction') {
         next = fn.call(ctx, next);
