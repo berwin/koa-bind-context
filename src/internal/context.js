@@ -44,25 +44,29 @@ module.exports = function (BindContext) {
    * @api private
    */
 
-  bc._bindContext = function (context) {
+  bc._bindContext = function (modules, context) {
     var toString = Object.prototype.toString;
+    var modulesMixin = {};
 
-    this._modules.forEach(bind);
-    bind(this._entrance);
-
-    function bind(item) {
-      var type = toString.call(item.module);
-
-      if (type === '[object Object]') {
-        item.module = util.mixin(item.module, context, true);
-      }
-
-      if (type === '[object Function]') {
-        var noBind = item.module.name.indexOf('bound') === -1;
-        if (noBind) {
-          item.module = item.module.bind(context);
-        }
-      }
+    for (var i in modules) {
+      modulesMixin[i] = bind(modules[i], context);
     }
+
+    return modulesMixin;
   };
 };
+
+
+function bind(item, context) {
+  var type = toString.call(item);
+
+  if (type === '[object Object]') {
+    item = util.mixin(item, context, true);
+  }
+
+  if (type === '[object Function]') {
+    item = item.bind(context);
+  }
+
+  return item;
+}
