@@ -43,9 +43,7 @@ module.exports = function (BindContext) {
     var self = this;
 
     return function *(next) {
-      var deps = self._mergeDependency();
-      var dependencyMixin = self._bindContext(deps, this);
-      var ctx = util.mixin(this, dependencyMixin);
+      var ctx = self._createContext(this);
 
       if (fn.constructor.name === 'GeneratorFunction') {
         next = fn.call(ctx, next);

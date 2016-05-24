@@ -18,8 +18,25 @@ var util = require('../util/index.js');
 module.exports = function (BindContext) {
   var bc = BindContext.prototype;
 
+  /*
+   * 创建上下文
+   * 
+   * @param {Context} koa中的上下文
+   * @return {Context} 返回附加了各种信息的上下文
+   * @api private
+   */
+
+  bc._createContext = function (context) {
+    var deps = this._mergeDependency();
+    var dependencyMixin = this._bindContext(deps, context);
+    var ctx = util.mixin(context, dependencyMixin);
+
+    return ctx;
+  };
+
   /**
    * 整合依赖
+   * 将 入口模块 和 其他依赖 模块整合
    *
    * @return {Object} 返回一个新对象，包含 modules 和 entrance 的依赖对象
    * @api private
@@ -66,6 +83,7 @@ module.exports = function (BindContext) {
  * @param {Object||Function} 模块导出的方法
  * @param {Object} 上下文
  * @return {Object||Function} 返回绑定context后的item
+ * @api private
  */
 function bind(item, context) {
   var type = toString.call(item);
