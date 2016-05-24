@@ -13,7 +13,7 @@ module.exports = function (BindContext) {
   var bc = BindContext.prototype;
 
   /**
-   * Get the modules dependencies
+   * 获取 依赖 和 入口文件 抛出的exports对象
    *
    * @api private
    */
