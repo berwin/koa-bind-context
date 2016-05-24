@@ -37,6 +37,7 @@ module.exports = function (BindContext) {
    * @param {Object} config.main 必选 自定义 key 与 value
    * @param {Object} config.main key 可以在 context 中通过这个 key 来读取对应的模块
    * @param {Object} config.main value 配置模块地址，根据模块路径把模块抛出的内容填入 context
+   * @param {Object} context 与main同理，不同的是，所有需要绑定上下文的模块都需要在context中配置，main只能配置一个文件
    */
 
   bc.config = function (config) {
