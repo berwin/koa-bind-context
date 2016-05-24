@@ -63,6 +63,16 @@ koaBindContext.exports();
 * controllers/user/user.js controller 文件
 * service/user/index.js 为controller提供接口
 
+app.js
+
+```javascript
+// ...
+var user = require('./controllers/user/index.js');
+// ...
+router.get('/user/:id', user.findById);
+// ...
+```
+
 controllers/user/index.js
 
 ```javascript
@@ -83,8 +93,8 @@ koaBindContext.exports();
 controllers/user/user.js
 
 ```javascript
-exports.home = function *() {
-  var userID = this.query.userID;
+exports.findById = function *() {
+  var userID = this.params.id;
   this.body = yield *this.UserService.findById(userID);
 }
 ```
