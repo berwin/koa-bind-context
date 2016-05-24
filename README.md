@@ -103,7 +103,7 @@ service/user/index.js
 
 ```javascript
 exports.findById = function *(id) {
-  // 不需要require，直接通过this就可以访问到依赖（仅限于业务逻辑）
+  // 不需要require，直接通过this就可以访问到依赖（仅限于配置文件中配置过的）
   return yield this.UserApi.get(id);
 };
 ```
