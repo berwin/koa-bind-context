@@ -19,44 +19,54 @@ module.exports = function (BindContext) {
   var bc = BindContext.prototype;
 
   /**
-   * Initialize a new context.
+   * 整合依赖
    *
+   * @return {Object} 返回一个新对象，包含 modules 和 entrance 的依赖对象
    * @api private
    */
 
-  bc._createContext = function () {
-    var context = {};
-    var _modules = this._modules;
-    var _entrance = this._entrance;
+  bc._mergeDependency = function () {
+    var dependencies = {};
+    var modules = this._modules;
+    var entrance = this._entrance;
 
-    context[_entrance.name] = _entrance.module;
-
-    for (var i = 0; i < _modules.length; i++) {
-      context[_modules[i].name] = _modules[i].module;
+    dependencies[entrance.name] = entrance.module;
+    for (var i = 0; i < modules.length; i++) {
+      dependencies[modules[i].name] = modules[i].module;
     }
 
-    return context;
+    return dependencies;
   };
 
   /**
-   * Bind a context.
+   * 绑定上下文
+   * 将所有的依赖绑定context，返回绑定后的依赖对象
    *
+   * @return {Object} 依赖对象
    * @api private
    */
 
-  bc._bindContext = function (modules, context) {
+  bc._bindContext = function (dependencies, context) {
     var toString = Object.prototype.toString;
-    var modulesMixin = {};
+    var dependencyMixin = {};
 
-    for (var i in modules) {
-      modulesMixin[i] = bind(modules[i], context);
+    for (var i in dependencies) {
+      dependencyMixin[i] = bind(dependencies[i], context);
     }
 
-    return modulesMixin;
+    return dependencyMixin;
   };
 };
 
 
+/*
+ * 绑定上下文
+ * 将context绑定到item中
+ *
+ * @param {Object||Function} 模块导出的方法
+ * @param {Object} 上下文
+ * @return {Object||Function} 返回绑定context后的item
+ */
 function bind(item, context) {
   var type = toString.call(item);
 
