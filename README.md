@@ -59,7 +59,7 @@ koaBindContext.exports();
   service/user/index.js
 ```
 * app 项目入口
-* controllers/user/index.js 配置context
+* controllers/user/index.js 配置context的配置文件
 * controllers/user/user.js controller 文件
 * service/user/index.js 为controller提供接口
 
