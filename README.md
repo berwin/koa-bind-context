@@ -29,10 +29,10 @@ npm install koa-bind-context --save
 ## API
 
 * [koa-bind-context](#koa-bind-context)
-  * [.config([opts])](#koaBindContext.config([opts]))
-  * [exports](#exports)
+  * [.config([opts])](#koabindcontextconfigopts)
+  * [.exports()](#koaBindContextexports)
 
-#### koaBindContext.config([opts])
+### koaBindContext.config([opts])
 
 使用Config这个方法来设置哪些模块是需要访问context的，这样我会根据配置对这些模块统一绑定context。之后这些模块就可以访问到context了
 
@@ -50,7 +50,7 @@ npm install koa-bind-context --save
   * value 配置模块地址，根据模块路径把模块抛出的内容填入 context
 * context 与main同理，不同的是，所有需要绑定上下文的模块都需要在context中配置，main只能配置一个文件
 
-### 例子
+#### 例子
 
 ```javascript
 koaBindContext.config({
@@ -64,7 +64,7 @@ koaBindContext.config({
 });
 ```
 
-## Exports
+### koaBindContext.exports()
 
 抛出绑定上下文后的入口文件，暴露的 API 与 config中配置的 main 入口文件中所抛出的接口一模一样~
 
