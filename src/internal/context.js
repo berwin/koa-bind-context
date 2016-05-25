@@ -64,16 +64,21 @@ module.exports = function (BindContext) {
    */
 
   bc._bindContext = function (dependencies, context) {
-    var dependencyMixin = {};
 
-    // 先将依赖都填入上下文
-    for (var j in dependencies) {
-      context[j] = dependencies[j];
-    }
+    /*
+     * 注意！！
+     * 
+     * 先将context 绑定到依赖后，在对context做修改，因为是引用关系，所以绑定的context会同步到最新的，
+     * 如果先将依赖填入context，后将context绑定到依赖，那么这个时候context中的依赖是旧依赖（绑定context之前的依赖）
+     * 所以，顺序很重要
+     */
 
-    // 后将上下文填入依赖
-    for (var i in dependencies) {
-      dependencyMixin[i] = bind(dependencies[i], context);
+    // 先将context绑定到依赖中
+    var dependencyMixin = bind(dependencies, context);
+
+    // 后将依赖填入context
+    for (var j in dependencyMixin) {
+      context[j] = dependencyMixin[j];
     }
 
     return dependencyMixin;
@@ -92,14 +97,16 @@ module.exports = function (BindContext) {
  */
 function bind(item, context) {
   var type = toString.call(item);
+  var dependencyMixin = {};
 
   if (type === '[object Object]') {
-    item = util.mixin(item, context, true);
+    for (var i in item) {
+      dependencyMixin[i] = bind(item[i], context);
+    }
+    return dependencyMixin;
   }
 
-  if (type === '[object Function]') {
-    item = item.bind(context);
+  if (type === '[object Function]' || type === '[object GeneratorFunction]') {
+    return item.bind(context);
   }
-
-  return item;
 }
