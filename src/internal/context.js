@@ -64,9 +64,14 @@ module.exports = function (BindContext) {
    */
 
   bc._bindContext = function (dependencies, context) {
-    var toString = Object.prototype.toString;
     var dependencyMixin = {};
 
+    // 先将依赖都填入上下文
+    for (var j in dependencies) {
+      context[j] = dependencies[j];
+    }
+
+    // 后将上下文填入依赖
     for (var i in dependencies) {
       dependencyMixin[i] = bind(dependencies[i], context);
     }
