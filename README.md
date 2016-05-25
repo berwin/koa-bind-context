@@ -30,7 +30,7 @@ npm install koa-bind-context --save
 
 * [koa-bind-context](#koa-bind-context)
   * [.config([opts])](#koabindcontextconfigopts)
-  * [.exports()](#koaBindContextexports)
+  * [.exports()](#koabindcontextexports)
 
 ### koaBindContext.config([opts])
 
@@ -70,13 +70,13 @@ koaBindContext.config({
 
 * @return {Object || Function || Other} 返回内容与入口文件的 module.exports 相同~
 
-### 例子
+#### 例子
 
 ```javascript
 koaBindContext.exports();
 ```
 
-## 应用例子
+#### 应用例子
 
 项目结构
 ```
