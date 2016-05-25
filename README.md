@@ -29,14 +29,21 @@ npm install koa-bind-context --save
 ## API
 
 * [koa-bind-context](#koa-bind-context)
-  * [config](#config)
+  * [.config([opts])](#koaBindContext.config([opts]))
   * [exports](#exports)
 
-## Config
+#### koaBindContext.config([opts])
 
 使用Config这个方法来设置哪些模块是需要访问context的，这样我会根据配置对这些模块统一绑定context。之后这些模块就可以访问到context了
 
 当然，所有需要绑定context的模块，都会出现在context中，他们互相之间可以通过 `this.[配置好的名字]` 来访问该模块，需要访问context的模块不能像普通模块那样使用require来调用，因为使用require调用的模块是没有办法绑定context的，所以直接通过 `this.[配置好的名字].[模块抛出的方法名]` 调用该模块的某个方法（这也是没有办法的事情）
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [opts] | <code>Object</code> |  |
+| [opts.main] | <code>Object</code> |  |
+| [opts.context] | <code>Object</code> |  |
+
 
 * main 必选 自定义 key 与 value 
   * key 可以在 context 中通过这个 key 来读取对应的模块
