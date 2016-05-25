@@ -27,62 +27,62 @@ module.exports = function (BindContext) {
    */
 
   bc._createContext = function (context) {
-    var deps = this._mergeDependency();
-    var dependencyMixin = this._bindContext(deps, context);
+    var deps = mergeDependency(this._entrance, this._modules);
+    var dependencyMixin = bindCtx(deps, context);
     var ctx = util.mixin(context, dependencyMixin);
 
     return ctx;
   };
+};
 
-  /**
-   * 整合依赖
-   * 将 入口模块 和 其他依赖 模块整合
-   *
-   * @return {Object} 返回一个新对象，包含 modules 和 entrance 的依赖对象
-   * @api private
+/**
+ * 整合依赖
+ * 将 入口模块 和 其他依赖 模块整合
+ *
+ * @param {Object} 入口模块
+ * @param {Array} 其他依赖列表
+ * @return {Object} 返回一个新对象，包含 modules 和 entrance 的依赖对象
+ * @api private
+ */
+
+ function mergeDependency(entrance, modules) {
+  var dependencies = {};
+
+  dependencies[entrance.name] = entrance.module;
+  for (var i = 0; i < modules.length; i++) {
+    dependencies[modules[i].name] = modules[i].module;
+  }
+
+  return dependencies;
+};
+
+/**
+ * 绑定上下文
+ * 将所有的依赖绑定context，返回绑定后的依赖对象
+ *
+ * @return {Object} 依赖对象
+ * @api private
+ */
+
+function bindCtx(dependencies, context) {
+
+  /*
+   * 注意！！
+   * 
+   * 先将context 绑定到依赖后，在对context做修改，因为是引用关系，所以绑定的context会同步到最新的，
+   * 如果先将依赖填入context，后将context绑定到依赖，那么这个时候context中的依赖是旧依赖（绑定context之前的依赖）
+   * 所以，顺序很重要
    */
 
-  bc._mergeDependency = function () {
-    var dependencies = {};
-    var modules = this._modules;
-    var entrance = this._entrance;
+  // 先将context绑定到依赖中
+  var dependencyMixin = bind(dependencies, context);
 
-    dependencies[entrance.name] = entrance.module;
-    for (var i = 0; i < modules.length; i++) {
-      dependencies[modules[i].name] = modules[i].module;
-    }
+  // 后将依赖填入context
+  for (var j in dependencyMixin) {
+    context[j] = dependencyMixin[j];
+  }
 
-    return dependencies;
-  };
-
-  /**
-   * 绑定上下文
-   * 将所有的依赖绑定context，返回绑定后的依赖对象
-   *
-   * @return {Object} 依赖对象
-   * @api private
-   */
-
-  bc._bindContext = function (dependencies, context) {
-
-    /*
-     * 注意！！
-     * 
-     * 先将context 绑定到依赖后，在对context做修改，因为是引用关系，所以绑定的context会同步到最新的，
-     * 如果先将依赖填入context，后将context绑定到依赖，那么这个时候context中的依赖是旧依赖（绑定context之前的依赖）
-     * 所以，顺序很重要
-     */
-
-    // 先将context绑定到依赖中
-    var dependencyMixin = bind(dependencies, context);
-
-    // 后将依赖填入context
-    for (var j in dependencyMixin) {
-      context[j] = dependencyMixin[j];
-    }
-
-    return dependencyMixin;
-  };
+  return dependencyMixin;
 };
 
 
