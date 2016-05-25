@@ -45,7 +45,7 @@ module.exports = function (BindContext) {
  * @api private
  */
 
- function mergeDependency(entrance, modules) {
+function mergeDependency(entrance, modules) {
   var dependencies = {};
 
   dependencies[entrance.name] = entrance.module;
