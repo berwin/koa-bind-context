@@ -1,5 +1,8 @@
 # koa-bind-context
 
+[![NPM Version](https://img.shields.io/npm/v/koa-bind-context.svg)](https://www.npmjs.com/package/koa-bind-context)
+[![NPM Downloads](https://img.shields.io/npm/dm/koa-bind-context.svg)](https://www.npmjs.com/package/koa-bind-context)
+
 将 context 绑定到项目中的每个角落
 
 ## 解决了什么问题？
