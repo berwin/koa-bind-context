@@ -119,7 +119,7 @@ controllers/user/index.js
 var koaBindContext = require('koa-bind-context');
 koaBindContext.config({
   main: {
-    controller: './user.js'
+    userCtrl: './user.js'
   },
   context: {
     UserService: '../../service/user/index.js',
