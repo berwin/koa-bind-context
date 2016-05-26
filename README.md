@@ -45,40 +45,44 @@ npm install koa-bind-context --save
 | [opts.context] | <code>Object</code> | 依赖集，所有需要访问context的模块都需要配置在这个字段中 |
 
 
-* main 必选 自定义 key 与 value 
-  * key 可以在 context 中通过这个 key 来读取对应的模块
-  * value 配置模块地址，根据模块路径把模块抛出的内容填入 context
-* context 与main同理，不同的是，所有需要绑定上下文的模块都需要在context中配置，main只能配置一个文件
+* main 对象中只能设置一对 key/value
+  * key 模块名，可以在 context 中通过这个名字来读取对应的模块
+  * value 模块地址，根据模块路径读取该模块
+* context 这个对象中可以保存多个 key/value
+  * key 同main一样
+  * value 同main一样
 
 #### 例子
 
 ```javascript
 koaBindContext.config({
   main: {
-    controller: './user.js'
+    userCtrl: './user.js'
   },
   context: {
-    service: '../../service/user/index.js',
-    proxy: '../../proxy/user/index.js'
+    userService: '../../service/user/index.js',
+    userProxy: '../../proxy/user/index.js'
   }
 });
 ```
 
-这样就可以在上下文中通过 this.controller 来访问 `'./user.js'`模块中的方法，通过 this.service 访问 `'../../service/user/index.js'` 模块中的方法...
+这样就可以在上下文中通过 `this.userCtrl` 来访问 `'./user.js'`模块中的方法，通过 `this.userService` 访问 `'../../service/user/index.js'` 模块中的方法，通过 `this.userProxy` 访问 `'../../proxy/user/index.js'`中的方法
 
 key的名字可以随意起，起什么名，就用什么名访问该模块
 
 ### koaBindContext.exports()
 
-抛出绑定上下文后的入口文件，暴露的 API 与 config中配置的 main 入口文件中所抛出的接口一模一样~
+不可以在router中直接require controller中的模块，二是需要使用 koaBindContext.exports() 来抛出controller中的方法。
 
-* @return {Object || Function || Other} 返回内容与入口文件的 module.exports 相同~
+koaBindContext.exports()抛出方法与入口文件（main中配置的模块）同步，就是说与 main 中配置的模块 module.exports 出来的方法同步。
 
 #### 例子
 
 ```javascript
-koaBindContext.exports();
+module.exports = koaBindContext.exports();
 ```
+
+koaBindContext.exports 与 `./user.js` module.exports 抛出的方法完全一样，
 
 #### 应用例子
 
@@ -119,7 +123,7 @@ koaBindContext.config({
   }
 });
 
-koaBindContext.exports();
+module.exports = koaBindContext.exports();
 ```
 
 controllers/user/user.js
