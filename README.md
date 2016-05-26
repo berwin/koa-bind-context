@@ -72,7 +72,7 @@ key的名字可以随意起，起什么名，就用什么名访问该模块
 
 ### koaBindContext.exports()
 
-不可以在router中直接require controller中的模块，二是需要使用 koaBindContext.exports() 来抛出controller中的方法。
+不可以在router中直接require controller中的模块，而是需要使用 koaBindContext.exports() 来抛出controller中的方法。
 
 koaBindContext.exports()抛出方法与入口文件（main中配置的模块）同步，就是说与 main 中配置的模块 module.exports 出来的方法同步。
 
@@ -88,11 +88,15 @@ koaBindContext.exports 与 `./user.js` module.exports 抛出的方法完全一�
 
 项目结构
 ```
-  app.js
-  controllers/user/
-                  index.js
-                  user.js
-  service/user/index.js
+|-- app.js
+   |-- package.json
+   |-- controllers  
+   |   `-- user  
+   |       |-- index.js
+   |       `-- user.js
+   `-- service  
+       `-- user  
+           `--index.js
 ```
 * app 项目入口
 * controllers/user/index.js 配置context的配置文件
