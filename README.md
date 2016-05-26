@@ -88,7 +88,7 @@ koaBindContext.exports 与 `./user.js` module.exports 抛出的方法完全一�
 
 项目结构
 ```
-|-- app.js
+`-- app.js
    |-- package.json
    |-- controllers  
    |   `-- user  
