@@ -34,15 +34,15 @@ npm install koa-bind-context --save
 
 ### koaBindContext.config([opts])
 
-使用Config这个方法来设置哪些模块是需要访问context的，这样我会根据配置对这些模块统一绑定context。之后这些模块就可以访问到context了
+使用Config这个方法来设置哪些模块是需要访问context的，这样会根据配置对这些模块统一绑定context。之后这些模块就可以访问到context了
 
 当然，所有需要绑定context的模块，都会出现在context中，他们互相之间可以通过 `this.[配置好的名字]` 来访问该模块，需要访问context的模块不能像普通模块那样使用require来调用，因为使用require调用的模块是没有办法绑定context的，所以直接通过 `this.[配置好的名字].[模块抛出的方法名]` 调用该模块的某个方法（这也是没有办法的事情）
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [opts] | <code>Object</code> |  |
-| [opts.main] | <code>Object</code> |  |
-| [opts.context] | <code>Object</code> |  |
+| [opts.main] | <code>Object</code> | 业务入口文件（通常是controller层的某个文件，用来导出方法给router调用） |
+| [opts.context] | <code>Object</code> | 依赖集，所有需要访问context的模块都需要配置在这个字段中 |
 
 
 * main 必选 自定义 key 与 value 
@@ -63,6 +63,10 @@ koaBindContext.config({
   }
 });
 ```
+
+这样就可以在上下文中通过 this.controller 来访问 `'./user.js'`模块中的方法，通过 this.service 访问 `'../../service/user/index.js'` 模块中的方法...
+
+key的名字可以随意起，起什么名，就用什么名访问该模块
 
 ### koaBindContext.exports()
 
