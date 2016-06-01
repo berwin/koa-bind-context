@@ -119,7 +119,7 @@ router.get('/user/:id', user.findById);
 controllers/user/index.js
 
 ```javascript
-var koaBindContext = require('koa-bind-context');
+var koaBindContext = require('koa-bind-context')();
 koaBindContext.config({
   main: {
     userCtrl: './user.js'
