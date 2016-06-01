@@ -4,7 +4,7 @@
  * Processing Context
  *
  * Authors:
- *  Berwin <liubowen.niubi@gmail.com>
+ *  Berwin <liubowen.niubi@gmail.com> (https://github.com/berwin)
  */
 
 'use strict';

@@ -2,7 +2,7 @@
  * Koa-bind-context - src/util/index.js
  *
  * Authors:
- *  Berwin <liubowen.niubi@gmail.com>
+ *  Berwin <liubowen.niubi@gmail.com> (https://github.com/berwin)
  */
 
 'use strict';
