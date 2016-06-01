@@ -38,7 +38,7 @@ module.exports = function (BindContext) {
       return exports;
     }
 
-    if (type === '[object Function]') {
+    if (type === '[object Function]' || type === '[object GeneratorFunction]') {
       return this._dispath(this._entrance.module);
     }
   };
